@@ -12,14 +12,44 @@ class Logger extends CI_Controller {
                 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
         }
 	
-        public function Addlog()
+        public function AddInitiallog()
 	{
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $key = $_POST['key'];
-                $url = $_POST['url'];
-                echo json_encode($this->logs_model->Addlog($key,$url));
+                //print_r($_POST);
+                $key = md5("31323");
+                $url = $_POST['URL'];
+                $ip = $_POST['ip'];
+                $lat = $_POST['latitude'];
+                $lng = $_POST['longitude'];
+                $country = $_POST['country_name'];
+                $address = $_POST['city'].','.$_POST['region_name'];
+                
+                echo json_encode($this->logs_model->Addlog($key,$url,$ip,$lat,$lng,$country,$address));
             }
-            
+	}
+        
+        public function LogTenSeconds()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['key'];
+                echo json_encode($this->logs_model->LogTenSeconds($id));
+            }
+	}
+        
+        public function LogThirtySeconds()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['key'];
+                echo json_encode($this->logs_model->LogThirtySeconds($id));
+            }
+	}
+        
+        public function LogThreeMins()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['key'];
+                echo json_encode($this->logs_model->LogThreeMins($id));
+            }
 	}
         
 	public function GetLogs()

@@ -9,15 +9,43 @@ class logs_model extends CI_Model {
                 $this->load->database();
         }
         
-         public function Addlog($key,$url) {
+        public function Addlog($key,$url,$ip,$lat,$lng,$country,$address) {
             $logInfo = array(
                 'APIKey' => $key,
-                'URL' => $url
+                'URL' => $url,
+                'IP' => $ip,
+                'Lat' => $lat,
+                'Lng' => $lng,
+                'Country' => $country,
+                'Address' => $address
                 );
-            if($this->db->insert('logs', $logInfo)){
-                return TRUE;
-            }
-            return FALSE;
+            
+            $this->db->insert('logs', $logInfo);
+            $insert_id = $this->db->insert_id();
+
+            return  $insert_id;
+        }
+        
+        public function LogTenSeconds($id) {
+            
+            $this->db->set('Time', '10');
+            $this->db->where('ID', $id);
+            return $this->db->update('logs');
+            
+        }
+        
+        public function LogThirtySeconds($id) {
+            
+            $this->db->set('Time', '30');
+            $this->db->where('ID', $id);
+            return $this->db->update('logs');
+        }
+        
+        public function LogThreeMins($id) {
+            
+            $this->db->set('Time', '180');
+            $this->db->where('ID', $id);
+            return $this->db->update('logs');
         }
         
         public function GetAllLogs($key,$ip,$URL,$Country) {
