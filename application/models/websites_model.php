@@ -1,6 +1,6 @@
 <?php
 
-class users_model extends CI_Model {
+class websites_model extends CI_Model {
 
         public function __construct()
         {
@@ -9,15 +9,16 @@ class users_model extends CI_Model {
                 $this->load->database();
         }
         
-        public function AddWebsite($APIKey,$OwnerID) {
+        public function AddWebsite($OwnerID,$Name) {
+            $APIKey = implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999).$OwnerID)), 0, 30), 6));
             $WebsiteInfo = array(
+                'OwnerID' => $OwnerID,
                 'APIKey' => $APIKey,
-                'OwnerID' => $OwnerID
+                'Name' => $Name
                 );
-            if($this->db->insert('websites', $WebsiteInfo)){
-                return TRUE;
-            }
-            return FALSE;
+            
+            $this->db->insert('websites', $WebsiteInfo);
+            return $APIKey;
         }
         
         public function GetWebsitesOfUser($OwnerID) {

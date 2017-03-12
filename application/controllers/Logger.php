@@ -16,7 +16,7 @@ class Logger extends CI_Controller {
 	{
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //print_r($_POST);
-                $key = md5("31323");
+                $key = $_POST['APIKey'];
                 $url = $_POST['URL'];
                 $ip = $_POST['ip'];
                 $lat = $_POST['latitude'];
