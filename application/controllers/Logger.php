@@ -56,9 +56,10 @@ class Logger extends CI_Controller {
 	{
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $key = $_POST['key'];
-                $ip = $_POST['IP'];
-                $URL = $_POST['URL'];
-                $Country = $_POST['Country'];
+                
+                $ip = (isset($_POST['IP']) ? $_POST['IP'] : NULL);
+                $URL = (isset($_POST['URL']) ? $_POST['URL'] : NULL);
+                $Country = (isset($_POST['Country']) ? $_POST['Country'] : NULL);
                 echo json_encode($this->logs_model->GetAllLogs($key,$ip,$URL,$Country));   
             }
 	}
