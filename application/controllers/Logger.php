@@ -83,26 +83,4 @@ class Logger extends CI_Controller {
             }
 	}
         
-        public function TurnOffControl($ID)
-	{
-            echo json_encode($this->controls_model->TurnOffControl($ID));
-	}
-        
-        public function EditControl()
-	{
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $ID = $_POST['ID'];
-                $name = $_POST['Name'];
-                $type = $_POST['Type'];
-                echo json_encode($this->controls_model->EditControl($ID,$name,$type));
-            }
-	}
-        
-        public function RemoveControl()
-	{
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $ID = $_POST['ID'];
-                echo json_encode($this->controls_model->RemoveControl($ID));
-            }
-	}
 }
