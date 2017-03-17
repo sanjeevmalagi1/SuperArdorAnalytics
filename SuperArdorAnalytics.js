@@ -1,9 +1,41 @@
 var APIKey = document.currentScript.getAttribute('APIKey');
 var currentLog = {};
+var id = "";
 
-var timer1 = {};
-var timer2 = {};
-var timer3 = {};
+var startDate = new Date();
+var elapsedTime = 0;
+
+var focus = function() {
+    startDate = new Date();
+};
+
+var blur = function() {
+    var endDate = new Date();
+    var spentTime = endDate.getTime() - startDate.getTime();
+    elapsedTime += spentTime;
+    PostLog('http://localhost/SuperArdorAnalytics/index.php/Logger/LogEnd/',
+    {
+       key : id,
+       time : elapsedTime/1000 
+    });
+};
+
+var beforeunload = function() {
+    var endDate = new Date();
+    var spentTime = endDate.getTime() - startDate.getTime();
+    elapsedTime += spentTime;
+    // elapsedTime contains the time spent on page in milliseconds
+    
+    PostLog('http://localhost/SuperArdorAnalytics/index.php/Logger/LogEnd/',
+    {
+       key : id,
+       time : elapsedTime/1000 
+    });
+};
+
+window.addEventListener('focus', focus);
+window.addEventListener('blur', blur);
+window.addEventListener('beforeunload', beforeunload);
 
 load('//freegeoip.net/json/',function(data,status){
    try{
@@ -11,6 +43,7 @@ load('//freegeoip.net/json/',function(data,status){
        currentLog.URL = window.location.href;
        currentLog.APIKey = APIKey;
        LogFirst();
+       /*
        window.onfocus = function () {
             timer1.resume();
             timer2.resume();
@@ -25,7 +58,7 @@ load('//freegeoip.net/json/',function(data,status){
        LogTenSeconds();
        LogThirtySeconds();
        LogThreeMins();
-       
+       */
    }
    catch(e){
        console.log(e)
@@ -34,12 +67,18 @@ load('//freegeoip.net/json/',function(data,status){
 
 
 
+
+
+
+
 function LogFirst(){
     PostLog('http://localhost/SuperArdorAnalytics/index.php/Logger/AddInitiallog/',currentLog,function(data,status){
-        currentLog.key = JSON.parse(data);    
+        //currentLog.key = JSON.parse(data);
+        id = JSON.parse(data);
   });
 }
 
+/*
 function LogTenSeconds(){
   timer1 = new Timer(function(){
     PostLog('http://localhost/SuperArdorAnalytics/index.php/Logger/LogTenSeconds/',currentLog,function(data,status){
@@ -63,7 +102,7 @@ function LogThreeMins(){
     })
   }, 300000);
 }
-
+*/
 //helper methods -----------------------------------------------------------
 //--------------------------------------------------------------------------
 function PostLog(url,data,callback){

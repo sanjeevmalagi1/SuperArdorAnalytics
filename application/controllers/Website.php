@@ -30,5 +30,15 @@ class Website extends CI_Controller {
             }
             
         }
+        
+        public function EditWebSite() {
+            //http://localhost/SuperArdorAnalytics/index.php/Website/EditWebSite
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $website_id = $_POST['WebSiteID'];
+                $newName = $_POST['NewName'];
+                echo json_encode($this->websites_model->EditWebSite($website_id,$newName));
+            }
+            
+        }
        
 }

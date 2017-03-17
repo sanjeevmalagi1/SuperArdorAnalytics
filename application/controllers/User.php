@@ -30,4 +30,27 @@ class User extends CI_Controller {
                 echo json_encode($this->users_model->LogIn($email,$password));   
             }
 	}
+        
+        public function ChangeEmail()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['ID'];
+                $oldEmail = $_POST['oldEmail'];
+                $newEmail = $_POST['newEmail'];
+                echo json_encode($this->users_model->ChangeEmail($id,$oldEmail,$newEmail));   
+            }
+	}
+        
+        public function ChangePassword()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['ID'];
+                $Email = $_POST['Email'];
+                $oldPassword = $_POST['oldPassword'];
+                $newPassword = $_POST['newPassword'];
+                echo json_encode($this->users_model->ChangePassword($id,$Email,$oldPassword,$newPassword));   
+            }
+	}
+        
+        
 }

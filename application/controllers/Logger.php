@@ -28,6 +28,15 @@ class Logger extends CI_Controller {
             }
 	}
         
+        public function LogEnd()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $id = $_POST['key'];
+                $time = $_POST['time'];
+                echo json_encode($this->logs_model->LogEnd($id,$time));
+            }
+	}
+        
         public function LogTenSeconds()
 	{
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -61,6 +70,16 @@ class Logger extends CI_Controller {
                 $URL = (isset($_POST['URL']) ? $_POST['URL'] : NULL);
                 $Country = (isset($_POST['Country']) ? $_POST['Country'] : NULL);
                 echo json_encode($this->logs_model->GetAllLogs($key,$ip,$URL,$Country));   
+            }
+	}
+        
+        public function GetLog()
+	{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $key = $_POST['key'];
+                
+                $ID = (isset($_POST['ID']) ? $_POST['ID'] : NULL);
+                echo json_encode($this->logs_model->GetLog($key,$ID));   
             }
 	}
         
